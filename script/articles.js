@@ -13,7 +13,7 @@ Article.prototype.toHTML = function() {
   var $template = $('#template').clone();
   $template.removeAttr('id');
   $template.find('.title').html(this.title);
-  $template.find('.author').html('<a href="' + this.authorUrl + '">' + this.author + '</a>' + ' date ' + this.publishedOn);
+  $template.find('.author').html('<a href="' + this.authorUrl + '">' + 'By: ' + this.author + '</a>' + ' date ' + this.publishedOn);
   $template.find('.body').html(this.body);
   // $template.find('.publishedOn').html(this.publishedOn);
   $('main').append($template);
