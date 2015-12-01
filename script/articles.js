@@ -4,6 +4,7 @@ var Article = function(props) {
   this.title = props.title;
   this.author = props.author;
   this.authorUrl = props.authorUrl;
+  this.category = props.category;
   this.body = props.body;
   this.publishedOn = props.publishedOn;
 };
@@ -15,6 +16,7 @@ Article.prototype.toHTML = function() {
   $template.find('.title').html(this.title);
   $template.find('.author').html('<a href="' + this.authorUrl + '">' + 'By: ' + this.author + '</a>' + ' date ' + this.publishedOn);
   $template.find('.body').html(this.body);
+  $template.find('.category').html('Category: ' + this.category);
   // $template.find('.publishedOn').html(this.publishedOn);
   $('main').append($template);
 };
