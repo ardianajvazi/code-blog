@@ -21,18 +21,30 @@ Article.prototype.toHTML = function() {
   $('main').append($template);
 };
 
-blog.rawData.sort(function (a, b) {
-  if (a.publishedOn < b.publishedOn) {
-    return 1;
-  }
-  if (a.publishedOn > b.publishedOn) {
-    return -1;
-  }
-  return 0;
+blog.sortRawDate = function() {
+  blog.rawData.sort(function (a, b) {
+    if (a.publishedOn < b.publishedOn) {
+      return 1;
+    }
+    if (a.publishedOn > b.publishedOn) {
+      return -1;
+    }
+    return 0;
+  });
+};
+
+blog.createArticles = function() {
+  for (var i = 0; i < blog.rawData.length; i++) {
+    var temp = new Article(blog.rawData[i]);
+    temp.toHTML();
+  };
+};
+
+$(document).ready(function() {
+  blog.sortRawDate();
+  blog.createArticles();
 });
 
-for (var i = 0; i < blog.rawData.length; i++) {
-  var temp = new Article(blog.rawData[i]);
-  temp.toHTML();
 
-};
+// new Date('2015-11-30')
+// new Date() - new Date('2015-10-30')
