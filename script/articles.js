@@ -7,21 +7,19 @@ var Article = function(props) {
   this.publishedOn = props.publishedOn;
 };
 
+
 Article.prototype.toHTML = function() {
-  return "<article>" +
-  "<h1>" + this.title +"</h1>"
- "<h2>" + this.author +"</h2>"
- "<p>" + this.body +"</p>"
- "<p>" + this.publishedOn +"</p>"
-  + "</article>"
+  var $template = $('#template').clone();
+  $template.removeAttr('id');
+  $template.find('.title').html(this.title);
+  $template.find('.author').html(this.author);
+  $template.find('.body').html(this.body);
+  $template.find('.publishedOn').html(this.publishedOn);
+  $('main').append($template);
 };
 
 for (var i = 0; i < blog.rawData.length; i++) {
-  blog.articles.push(new Article(blog.rawData[i]));
-}
+  var temp = new Article(blog.rawData[i]);
+  temp.toHTML();
 
-console.log(blog.articles);
-
-//
-// var blog = new Article (blog);
-// console.log(blog);
+};

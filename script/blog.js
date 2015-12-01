@@ -1,4 +1,4 @@
-var blog = {}
+var blog = {};
 
 blog.rawData = [
   {
