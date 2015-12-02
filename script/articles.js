@@ -1,9 +1,8 @@
-// var blogArticles = [];
-
 var Article = function(props) {
   this.title = props.title;
   this.author = props.author;
   this.authorUrl = props.authorUrl;
+  this.category = props.category;
   this.body = props.body;
   this.publishedOn = props.publishedOn;
 };
@@ -13,24 +12,58 @@ Article.prototype.toHTML = function() {
   var $template = $('#template').clone();
   $template.removeAttr('id');
   $template.find('.title').html(this.title);
-  $template.find('.author').html('<a href="' + this.authorUrl + '">' + 'By: ' + this.author + '</a>' + ' date ' + this.publishedOn);
+  $template.find('.author').html('By: ' + '<a href="' + this.authorUrl + '">' + this.author + '</a>' + ' date ' + this.publishedOn);
   $template.find('.body').html(this.body);
-  // $template.find('.publishedOn').html(this.publishedOn);
+  $template.find('.category').html('Category: ' + this.category);
   $('main').append($template);
 };
 
-blog.rawData.sort(function (a, b) {
-  if (a.publishedOn < b.publishedOn) {
-    return 1;
+blog.dropDown = function() {
+  for (var i = 0; i < blog.rawData.length; i++) {
+    var cat = (blog.rawData[i]).text(this.category);
+    var $menu1 = $('categories').clone();
+    $menu1.removeAttr('id').text(cat);
+    $('filterCategories').append($menu1);
   }
-  if (a.publishedOn > b.publishedOn) {
-    return -1;
-  }
-  return 0;
-});
-
-for (var i = 0; i < blog.rawData.length; i++) {
-  var temp = new Article(blog.rawData[i]);
-  temp.toHTML();
 
 };
+
+
+blog.sortRawDate = function() {
+  blog.rawData.sort(function (a, b) {
+    if (a.publishedOn < b.publishedOn) {
+      return 1;
+    }
+    if (a.publishedOn > b.publishedOn) {
+      return -1;
+    }
+    return 0;
+  });
+};
+
+blog.createArticles = function() {
+  for (var i = 0; i < blog.rawData.length; i++) {
+    var temp = new Article(blog.rawData[i]);
+    temp.toHTML();
+  };
+  $('#template').remove();
+};
+
+
+blog.hideArticles = function() {
+  $('article p:not(:first-child)').hide();
+  $('article').on('click', '.read-on', function(event) {
+    event.preventDefault();
+    $(this).parent().find('p').fadeIn();
+    $(this).hide();
+  });
+};
+
+$(document).ready(function() {
+  blog.sortRawDate();
+  blog.createArticles();
+  blog.hideArticles();
+  blog.dropDown();
+});
+
+//look at data attributes

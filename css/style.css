@@ -4,12 +4,10 @@ article {
   overflow: auto;
   width: 80%;
   margin: 0 auto;
+  margin-top: 20px;
   border: 1px solid #000;
 }
-article#template{
-  border-style: hidden;
 
-}
 img {
   display:block;
   width: 300px;
@@ -20,11 +18,18 @@ nav li{
   margin-bottom: 50px;
   display: inline;
 }
-a {
+a{
   color: grey;
+}
+a:hover {
+  color: blue;
 }
 .author {
   text-decoration: none;
+   font-size: 15px;
+   color: grey;
+ }
+ h2 {
    font-size: 15px;
    color: grey;
  }
