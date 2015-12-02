@@ -1,5 +1,3 @@
-// var blogArticles = [];
-
 var Article = function(props) {
   this.title = props.title;
   this.author = props.author;
@@ -14,12 +12,22 @@ Article.prototype.toHTML = function() {
   var $template = $('#template').clone();
   $template.removeAttr('id');
   $template.find('.title').html(this.title);
-  $template.find('.author').html('<a href="' + this.authorUrl + '">' + 'By: ' + this.author + '</a>' + ' date ' + this.publishedOn);
+  $template.find('.author').html('By: ' + '<a href="' + this.authorUrl + '">' + this.author + '</a>' + ' date ' + this.publishedOn);
   $template.find('.body').html(this.body);
   $template.find('.category').html('Category: ' + this.category);
-  // $template.find('.publishedOn').html(this.publishedOn);
   $('main').append($template);
 };
+
+blog.dropDown = function() {
+  for (var i = 0; i < blog.rawData.length; i++) {
+    var cat = (blog.rawData[i]).text(this.category);
+    var $menu1 = $('categories').clone();
+    $menu1.removeAttr('id').text(cat);
+    $('filterCategories').append($menu1);
+  }
+
+};
+
 
 blog.sortRawDate = function() {
   blog.rawData.sort(function (a, b) {
@@ -38,13 +46,24 @@ blog.createArticles = function() {
     var temp = new Article(blog.rawData[i]);
     temp.toHTML();
   };
+  $('#template').remove();
+};
+
+
+blog.hideArticles = function() {
+  $('article p:not(:first-child)').hide();
+  $('article').on('click', '.read-on', function(event) {
+    event.preventDefault();
+    $(this).parent().find('p').fadeIn();
+    $(this).hide();
+  });
 };
 
 $(document).ready(function() {
   blog.sortRawDate();
   blog.createArticles();
+  blog.hideArticles();
+  blog.dropDown();
 });
 
-
-// new Date('2015-11-30')
-// new Date() - new Date('2015-10-30')
+//look at data attributes
