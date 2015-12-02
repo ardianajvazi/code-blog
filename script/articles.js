@@ -20,14 +20,20 @@ Article.prototype.toHTML = function() {
 
 blog.dropDown = function() {
   for (var i = 0; i < blog.rawData.length; i++) {
-    var cat = (blog.rawData[i]).text(this.category);
-    var $menu1 = $('categories').clone();
-    $menu1.removeAttr('id').text(cat);
-    $('filterCategories').append($menu1);
+    var cate = blog.rawData[i].category;
+    var $menu1 = $('.categories').clone();
+    $menu1.removeAttr('class').text(cate);
+    $('.filterCategories').append($menu1);
   }
-
 };
-
+blog.dropDown2 = function() {
+  for (var i = 0; i < blog.rawData.length; i++) {
+    var auth = blog.rawData[i].author;
+    var $menu2 = $('.authors').clone();
+    $menu2.removeAttr('class').text(auth);
+    $('.filterAuthors').append($menu2);
+  }
+};
 
 blog.sortRawDate = function() {
   blog.rawData.sort(function (a, b) {
@@ -64,6 +70,7 @@ $(document).ready(function() {
   blog.createArticles();
   blog.hideArticles();
   blog.dropDown();
+  blog.dropDown2();
 });
 
 //look at data attributes
