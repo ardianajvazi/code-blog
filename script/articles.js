@@ -1,3 +1,5 @@
+var checkCat = [];
+
 var Article = function(props) {
   this.title = props.title;
   this.author = props.author;
@@ -5,6 +7,7 @@ var Article = function(props) {
   this.category = props.category;
   this.body = props.body;
   this.publishedOn = props.publishedOn;
+
 };
 
 
@@ -21,18 +24,44 @@ Article.prototype.toHTML = function() {
 blog.dropDown = function() {
   for (var i = 0; i < blog.rawData.length; i++) {
     var cate = blog.rawData[i].category;
+    checkCat.push(cate);
+    // for(var j=0; j<checkCat.length; j++){
+    //   if(checkCat[j] != cate)
+    //   {
+    //     checkCat.push(cate);
+    //   }
+    // }
+  }
+
+  for (var tini = 0; tini < checkCat.length; tini++) {
+
     var $menu1 = $('.categories').clone();
-    $menu1.removeAttr('class').text(cate);
-    $('.filterCategories').append($menu1);
+    $menu1.attr('value', checkCat[tini]);
+    $menu1.removeAttr('class').text(checkCat[tini]);
+    $('#filterCategories').append($menu1);
+
   }
 };
+
 blog.dropDown2 = function() {
   for (var i = 0; i < blog.rawData.length; i++) {
     var auth = blog.rawData[i].author;
     var $menu2 = $('.authors').clone();
     $menu2.removeAttr('class').text(auth);
-    $('.filterAuthors').append($menu2);
+    $('#filterAuthors').append($menu2);
   }
+};
+
+blog.filterMenu1 = function() {
+
+  $('select[id="filterCategories"]').change(function() {
+    $('#filterAuthors').find('option:first').attr('selected', 'selected');
+    $('main').find('article').show();
+    //alert($(this).val());
+    if ($(this).val() !== 'none'){
+      $('.category:not(:contains(' + $(this).val() + '))').parent().hide();
+    };
+  });
 };
 
 blog.sortRawDate = function() {
@@ -71,6 +100,7 @@ $(document).ready(function() {
   blog.hideArticles();
   blog.dropDown();
   blog.dropDown2();
+  blog.filterMenu1();
 });
 
 //look at data attributes
