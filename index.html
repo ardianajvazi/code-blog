@@ -6,17 +6,19 @@
     <link href="css/style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
   </head>
-  <body>
+  <body name="top" id="returnContent">
     <header>
       <h1>My Blog</h1>
       <nav>
         <ul>
-          <li>Home</li>
-          <li>Blogs</li>
-          <li>About</li>
+          <li id="homeTab"><a href="#home">Home</a></li>
+          <li><a href="https://github.com/ardianajvazi">GitHub</a></li>
+          <li id="aboutTab"><a href="#about">About</a></li>
         </ul>
+      </nav>
+        <div class="tab1">
         <form>
-            <section id='dropMenu'>
+            <section id="dropMenu">
               <select id="filterCategories">
                 <option class="categories" value="none">Find by category</option>
               </select>
@@ -26,9 +28,8 @@
               </select>
             </section>
         </form>
-      </nav>
     </header>
-   <main>
+   <main class="tab1">
      <article id="template">
        <h1 class="title"></h1>
        <h2 class="author"></h2>
@@ -37,12 +38,13 @@
        <a href="#" class="read-on">Read more</a>
      </article>
    </main>
-
+  </div>
+<div class="tab2">your mom</div>
+    <!-- <div id="tab2">your mom</div> -->
    <footer>
-
+     <a href="#top">Back to top</a>
    </footer>
   <script type="text/javascript" src="script/blog.js"></script>
   <script type="text/javascript" src="script/articles.js"></script>
   </body>
-
 </html>
