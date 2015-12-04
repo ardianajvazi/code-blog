@@ -1,3 +1,6 @@
+var checkCat = [];
+var checkAuth = [];
+
 var Article = function(props) {
   this.title = props.title;
   this.author = props.author;
@@ -5,6 +8,7 @@ var Article = function(props) {
   this.category = props.category;
   this.body = props.body;
   this.publishedOn = props.publishedOn;
+
 };
 
 
@@ -20,14 +24,54 @@ Article.prototype.toHTML = function() {
 
 blog.dropDown = function() {
   for (var i = 0; i < blog.rawData.length; i++) {
-    var cat = (blog.rawData[i]).text(this.category);
-    var $menu1 = $('categories').clone();
-    $menu1.removeAttr('id').text(cat);
-    $('filterCategories').append($menu1);
+    var cate = blog.rawData[i].category;
+    checkCat.push(cate);
   }
+
+  $.each($.unique(checkCat), function(i, value){
+    var $menu1 = $('.categories').clone();
+    $menu1.attr('value', value);
+    $menu1.removeAttr('class').text(value);
+    $('#filterCategories').append($menu1);
+  });
 
 };
 
+blog.dropDown2 = function() {
+  for (var i = 0; i < blog.rawData.length; i++) {
+    var cate = blog.rawData[i].author;
+    checkAuth.push(cate);
+  }
+
+  $.each($.unique(checkAuth), function(i, value){
+    var $menu1 = $('.authors').clone();
+    $menu1.attr('value', value);
+    $menu1.removeAttr('class').text(value);
+    $('#filterAuthors').append($menu1);
+  });
+};
+
+blog.filterMenu1 = function() {
+
+  $('select[id="filterCategories"]').change(function() {
+    $('#filterAuthors').find('option:first').attr('selected', 'selected');
+    $('main').find('article').show();
+    if ($(this).val() !== 'none'){
+      $('.category:not(:contains(' + $(this).val() + '))').parent().hide();
+    };
+  });
+};
+
+blog.filterMenu2 = function() {
+
+  $('select[id="filterAuthors"]').change(function() {
+    $('#filterCategories').find('option:first').attr('selected', 'selected');
+    $('main').find('article').show();
+    if ($(this).val() !== 'none'){
+      $('.author:not(:contains(' + $(this).val() + '))').parent().hide();
+    };
+  });
+};
 
 blog.sortRawDate = function() {
   blog.rawData.sort(function (a, b) {
@@ -64,6 +108,9 @@ $(document).ready(function() {
   blog.createArticles();
   blog.hideArticles();
   blog.dropDown();
+  blog.dropDown2();
+  blog.filterMenu1();
+  blog.filterMenu2();
 });
 
 //look at data attributes
