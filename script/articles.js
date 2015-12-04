@@ -1,4 +1,5 @@
 var checkCat = [];
+var checkAuth = [];
 
 var Article = function(props) {
   this.title = props.title;
@@ -25,31 +26,29 @@ blog.dropDown = function() {
   for (var i = 0; i < blog.rawData.length; i++) {
     var cate = blog.rawData[i].category;
     checkCat.push(cate);
-    // for(var j=0; j<checkCat.length; j++){
-    //   if(checkCat[j] != cate)
-    //   {
-    //     checkCat.push(cate);
-    //   }
-    // }
   }
 
-  for (var tini = 0; tini < checkCat.length; tini++) {
-
+  $.each($.unique(checkCat), function(i, value){
     var $menu1 = $('.categories').clone();
-    $menu1.attr('value', checkCat[tini]);
-    $menu1.removeAttr('class').text(checkCat[tini]);
+    $menu1.attr('value', value);
+    $menu1.removeAttr('class').text(value);
     $('#filterCategories').append($menu1);
+  });
 
-  }
 };
 
 blog.dropDown2 = function() {
   for (var i = 0; i < blog.rawData.length; i++) {
-    var auth = blog.rawData[i].author;
-    var $menu2 = $('.authors').clone();
-    $menu2.removeAttr('class').text(auth);
-    $('#filterAuthors').append($menu2);
+    var cate = blog.rawData[i].author;
+    checkAuth.push(cate);
   }
+
+  $.each($.unique(checkAuth), function(i, value){
+    var $menu1 = $('.authors').clone();
+    $menu1.attr('value', value);
+    $menu1.removeAttr('class').text(value);
+    $('#filterAuthors').append($menu1);
+  });
 };
 
 blog.filterMenu1 = function() {
@@ -57,9 +56,19 @@ blog.filterMenu1 = function() {
   $('select[id="filterCategories"]').change(function() {
     $('#filterAuthors').find('option:first').attr('selected', 'selected');
     $('main').find('article').show();
-    //alert($(this).val());
     if ($(this).val() !== 'none'){
       $('.category:not(:contains(' + $(this).val() + '))').parent().hide();
+    };
+  });
+};
+
+blog.filterMenu2 = function() {
+
+  $('select[id="filterAuthors"]').change(function() {
+    $('#filterCategories').find('option:first').attr('selected', 'selected');
+    $('main').find('article').show();
+    if ($(this).val() !== 'none'){
+      $('.author:not(:contains(' + $(this).val() + '))').parent().hide();
     };
   });
 };
@@ -101,6 +110,7 @@ $(document).ready(function() {
   blog.dropDown();
   blog.dropDown2();
   blog.filterMenu1();
+  blog.filterMenu2();
 });
 
 //look at data attributes
