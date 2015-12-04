@@ -11,7 +11,6 @@ var Article = function(props) {
 
 };
 
-
 Article.prototype.toHTML = function() {
   var $template = $('#template').clone();
   $template.removeAttr('id');
@@ -72,7 +71,6 @@ blog.filterMenu2 = function() {
   });
 };
 
-
 blog.sortRawDate = function() {
   blog.rawData.sort(function (a, b) {
     if (a.publishedOn < b.publishedOn) {
@@ -103,6 +101,21 @@ blog.hideArticles = function() {
   });
 };
 
+blog.tabDrop = function() {
+  $('#aboutTab').on('click', function(event) {
+    event.preventDefault();
+    $('.tab1').hide();
+    $('.tab2').show();
+  });
+};
+blog.contentReturn = function() {
+  $('#homeTab').on('click', function(event) {
+    event.preventDefault;
+    $('.tab2').hide();
+    $('.tab1').show();
+  });
+};
+
 $(document).ready(function() {
   blog.sortRawDate();
   blog.createArticles();
@@ -111,6 +124,8 @@ $(document).ready(function() {
   blog.dropDown2();
   blog.filterMenu1();
   blog.filterMenu2();
+  blog.tabDrop();
+  blog.contentReturn();
 });
 
 //look at data attributes
