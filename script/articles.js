@@ -63,7 +63,6 @@ blog.filterMenu1 = function() {
 };
 
 blog.filterMenu2 = function() {
-
   $('select[id="filterAuthors"]').change(function() {
     $('#filterCategories').find('option:first').attr('selected', 'selected');
     $('main').find('article').show();
@@ -72,6 +71,7 @@ blog.filterMenu2 = function() {
     };
   });
 };
+
 
 blog.sortRawDate = function() {
   blog.rawData.sort(function (a, b) {
