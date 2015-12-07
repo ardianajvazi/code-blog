@@ -4,8 +4,19 @@
   <title>My blog</title>
   <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
   <link href="css/style.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.js">
   <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js" charset="utf-8"></script>
+  <script type="text/javascript" src="script/handlebars-v4.0.5.js"></script>
+
+  <script id="entry-template" type="text/x-handlebar">
+    <article id="template">
+      <h1>{{title}}</h1>
+      <h2 class="author">{{author}}</h2>
+      <h2 class="category">{{category}}</h2>
+      <section>{{{body}}}</section>
+      <a href="#" class="read-on">Read more</a>
+    </article>
+  </script>
 </head>
   <body>
     <header>
@@ -36,26 +47,28 @@
         </label>
         <textarea id="body" rows="8" cols="40" required></textarea>
         <label>
-          <input type="checkbox" id="published"> Published
+          <input type="submit" id="published"> Published
         </label>
       </form>
         <div id=formInfo>Form output:</div>
-      <section id="previewArticle">
-        <article id="template">
-          <h1 class="title"></h1>
-          <h2 class="author"></h2>
-          <h2 class="category"></h2>
-          <section class="body"></section>
-        </article>
-      </section>
 
-      <section id="articlesJSON">
+      </section>
+      <section id="preview"></section>
+
+        <section id="articlesJSON">
+          <label id="export-field" for="article-json" class="pull-right">
+            <div type="text" readonly id="article-json"></div>
+            When finalized, copy the above JSON, and paste into blogArticle.js
+          </label>
+        </section>
+
 
       </section>
 
       <script type="text/javascript" src="script/blog.js"></script>
       <script type="text/javascript" src="script/articles.js"></script>
       <script type="text/javascript" src="script/form.js"></script>
+
 
   </body>
 </html>

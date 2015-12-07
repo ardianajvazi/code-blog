@@ -12,13 +12,11 @@ var Article = function(props) {
 };
 
 Article.prototype.toHTML = function() {
-  var $template = $('#template').clone();
-  $template.removeAttr('id');
-  $template.find('.title').html(this.title);
-  $template.find('.author').html('By: ' + '<a href="' + this.authorUrl + '">' + this.author + '</a>' + ' date ' + this.publishedOn);
-  $template.find('.body').html(this.body);
-  $template.find('.category').html('Category: ' + this.category);
-  $('main').append($template);
+  var source = $('#entry-template').html();
+  console.log(source);
+  var template = Handlebars.compile(source);
+  var result = template(this);
+  $('#blogs').append(result);
 };
 
 blog.dropDown = function() {
@@ -88,7 +86,7 @@ blog.createArticles = function() {
     var temp = new Article(blog.rawData[i]);
     temp.toHTML();
   };
-  $('#template').remove();
+  // $('#template').remove();
 };
 
 
