@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My blog</title>
+  <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+  <link href="css/style.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.js" charset="utf-8"></script>
+</head>
+  <body>
+    <header>
+      <h1>New Blog</h1>
+      <nav>
+        <ul>
+          <li id="homeTab"><a href="#home">Home</a></li>
+          <li><a href="https://github.com/ardianajvazi">GitHub</a></li>
+          <li id="aboutTab"><a href="#about">About</a></li>
+        </ul>
+      </nav>
+    </header>
+    <form id="newArticle">
+        <label>
+          <input type="text" id="title" placeholder="Article title" required>
+        </label>
+        <label>
+          <input type="text" id="author" placeholder="Author Name" required>
+        </label>
+        <label>
+          <input type="text" id="authorUrl" placeholder="Author's URL" required>
+        </label>
+        <label>
+          <input type="text" id="category" placeholder="Category" required>
+        </label>
+        <label>
+          <input type="text" id="publishedOn" placeholder="mm/day/year" required>
+        </label>
+        <textarea id="body" rows="8" cols="40" required></textarea>
+        <label>
+          <input type="checkbox" id="published"> Published
+        </label>
+      </form>
+        <div id=formInfo>Form output:</div>
+      <section id="previewArticle">
+        <article id="template">
+          <h1 class="title"></h1>
+          <h2 class="author"></h2>
+          <h2 class="category"></h2>
+          <section class="body"></section>
+        </article>
+      </section>
+
+      <section id="articlesJSON">
+
+      </section>
+
+      <script type="text/javascript" src="script/blog.js"></script>
+      <script type="text/javascript" src="script/articles.js"></script>
+      <script type="text/javascript" src="script/form.js"></script>
+
+  </body>
+</html>
