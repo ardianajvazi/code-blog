@@ -1,22 +1,25 @@
 var checkCat = [];
 var checkAuth = [];
 
+
 var Article = function(props) {
   this.title = props.title;
   this.author = props.author;
   this.authorUrl = props.authorUrl;
   this.category = props.category;
-  this.body = props.body;
+  this.body = props.body || marked(this.markdown);
   this.publishedOn = props.publishedOn;
+  blog.articles.push(this);
+
 
 };
 
 Article.prototype.toHTML = function() {
   var source = $('#entry-template').html();
-  console.log(source);
+  // console.log(source);
   var template = Handlebars.compile(source);
   var result = template(this);
-  $('#blogs').append(result);
+  return result;
 };
 
 blog.dropDown = function() {
@@ -84,7 +87,8 @@ blog.sortRawDate = function() {
 blog.createArticles = function() {
   for (var i = 0; i < blog.rawData.length; i++) {
     var temp = new Article(blog.rawData[i]);
-    temp.toHTML();
+
+    $('main').prepend(temp.toHTML());
   };
   // $('#template').remove();
 };

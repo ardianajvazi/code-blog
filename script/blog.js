@@ -1,6 +1,10 @@
 var blog = {};
+blog.articles = [];
 
 blog.rawData = [
+  {"title":"Seahawks","author":"ardian","authorUrl":"facebook.com","category":"sports","publishedOn":"05-15-2015","body":"<h2 id=\"hahahahaha\">hahahahaha</h2>\n"},
+  {"title":"Seahawks","author":"ardian","authorUrl":"facebook.com","category":"sports","publishedOn":"05-15-2015","body":"<h2 id=\"haha\">haha</h2>\n"},
+
   {
     title:       'Bacon Ipsum',
     category:    'food',

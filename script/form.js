@@ -2,21 +2,16 @@ function previewPost(event) {
   event.preventDefault();
   var title = $('#title').val();
   var author = $('#author').val();
-  var authorURL = $('#authorURL').val();
+  var authorUrl = $('#authorUrl').val();
   var category = $('#category').val();
   var publishedOn = $('#publishedOn').val();
   var body = $('#body').val();
-  console.log(body);
-  $('#preview').append(marked(body));
+  body = marked(body);
   var stored = {title: title, author: author, authorUrl: authorUrl, category: category, publishedOn: publishedOn, body: body};
-  console.log()
-  var newPost = new Article.prototype(stored);
-  newPost = newPost.toString();
-  console.log(newPost);
-  $('#preview').append(newPost.toHTML());
-  console.log(newPost);
+  var newPost = new Article(stored);
   var storedArt = JSON.stringify(stored);
-  $('#article-json').append(storedArt);
+  $('#preview').append(newPost.toHTML());
+  $('#article-json').text(storedArt);
 };
 
 $(document).ready(function() {
