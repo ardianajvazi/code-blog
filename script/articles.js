@@ -6,19 +6,24 @@ var Article = function(props) {
   this.author = props.author;
   this.authorUrl = props.authorUrl;
   this.category = props.category;
-  this.body = props.body;
+  this.body = props.body || marked(this.markdown);
   this.publishedOn = props.publishedOn;
-
+  blog.articles.push(this);
 };
 
 Article.prototype.toHTML = function() {
-  var $template = $('#template').clone();
-  $template.removeAttr('id');
-  $template.find('.title').html(this.title);
-  $template.find('.author').html('By: ' + '<a href="' + this.authorUrl + '">' + this.author + '</a>' + ' date ' + this.publishedOn);
-  $template.find('.body').html(this.body);
-  $template.find('.category').html('Category: ' + this.category);
-  $('main').append($template);
+  var source = $('#entry-template').html();
+  var template = Handlebars.compile(source);
+  var result = template(this);
+  return result;
+};
+
+blog.createArticles = function() {
+  for (var i = 0; i < blog.rawData.length; i++) {
+    var temp = new Article(blog.rawData[i]);
+
+    $('main').prepend(temp.toHTML());
+  };
 };
 
 blog.dropDown = function() {
@@ -83,15 +88,6 @@ blog.sortRawDate = function() {
   });
 };
 
-blog.createArticles = function() {
-  for (var i = 0; i < blog.rawData.length; i++) {
-    var temp = new Article(blog.rawData[i]);
-    temp.toHTML();
-  };
-  $('#template').remove();
-};
-
-
 blog.hideArticles = function() {
   $('article p:not(:first-child)').hide();
   $('article').on('click', '.read-on', function(event) {
@@ -127,5 +123,3 @@ $(document).ready(function() {
   blog.tabDrop();
   blog.contentReturn();
 });
-
-//look at data attributes

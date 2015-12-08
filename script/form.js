@@ -1,26 +1,19 @@
-var newPost = function(post) {
-  this.title = post.title;
-  this.author = post.author;
-  this.authorUrl = post.authorUrl;
-  this.category = post.category;
-  this.body = post.body;
-  this.publishedOn = post.publishedOn;
+function previewPost(event) {
+  event.preventDefault();
+  var title = $('#title').val();
+  var author = $('#author').val();
+  var authorUrl = $('#authorUrl').val();
+  var category = $('#category').val();
+  var publishedOn = $('#publishedOn').val();
+  var body = $('#body').val();
+  body = marked(body);
+  var stored = {title: title, author: author, authorUrl: authorUrl, category: category, publishedOn: publishedOn, body: body};
+  var newPost = new Article(stored);
+  var storedArt = JSON.stringify(stored);
+  $('#preview').append(newPost.toHTML());
+  $('#article-json').text(storedArt);
 };
 
-newPost.prototype.toHTML = function(tagTarget) {
-  var $templatePost = $('#previewArticle').clone();
-  $templatePost.removeAttr('id');
-  $templatePost.find('.title').html(this.title);
-  $templatePost.find('.author').html('By: ' + '<a href="' + this.authorUrl + '">' + this.author + '</a>' + ' date ' + this.publishedOn);
-  $templatePost.find('.category').html('Category: ' + this.category);
-  $templatePost.find('.body').html(this.body);
-  $('section').append($templatePost);
-};
-
-blog.createPost = function() {
-  for (var i = 0; i < blog.rawData.length; i++) {
-    var tempPost = new newPost(blog.rawData[i]);
-    tempPost.toHTML();
-  };
-  $('#previewArticle').remove();
-};
+$(document).ready(function() {
+  $('#newArticle').submit(previewPost);
+});
