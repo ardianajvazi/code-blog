@@ -4,6 +4,7 @@
   <title>My blog</title>
   <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
   <link href="css/style.css" rel="stylesheet">
+  <link href="css/form.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
   <script type="text/javascript" src="script/handlebars-v4.0.5.js"></script>
@@ -25,7 +26,7 @@
       <h1>New Blog</h1>
       <nav>
         <ul>
-          <li id="homeTab"><a href="#home">Home</a></li>
+          <li id="homeTab"><a href="index.html">Home</a></li>
           <li><a href="https://github.com/ardianajvazi">GitHub</a></li>
           <li id="aboutTab"><a href="#about">About</a></li>
         </ul>
@@ -49,9 +50,10 @@
         </label>
         <textarea id="body" rows="8" cols="40" required></textarea>
         <label>
-          <input type="submit" id="published"> Published
+          <input type="submit" id="published">
         </label>
       </form>
+
         <div id=formInfo>Form output:</div>
 
       </section>
@@ -60,17 +62,14 @@
         <section id="articlesJSON">
           <label id="export-field" for="article-json" class="pull-right">
             <div type="text" readonly id="article-json"></div>
-            When finalized, copy the above JSON, and paste into blogArticle.js
+            When finalized, copy the above JSON, and paste into blog.js
           </label>
         </section>
-
-
-      </section>
 
       <script type="text/javascript" src="script/blog.js"></script>
       <script type="text/javascript" src="script/articles.js"></script>
       <script type="text/javascript" src="script/form.js"></script>
 
-
+</section>
   </body>
 </html>

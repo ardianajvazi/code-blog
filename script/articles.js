@@ -1,7 +1,6 @@
 var checkCat = [];
 var checkAuth = [];
 
-
 var Article = function(props) {
   this.title = props.title;
   this.author = props.author;
@@ -10,16 +9,21 @@ var Article = function(props) {
   this.body = props.body || marked(this.markdown);
   this.publishedOn = props.publishedOn;
   blog.articles.push(this);
-
-
 };
 
 Article.prototype.toHTML = function() {
   var source = $('#entry-template').html();
-  // console.log(source);
   var template = Handlebars.compile(source);
   var result = template(this);
   return result;
+};
+
+blog.createArticles = function() {
+  for (var i = 0; i < blog.rawData.length; i++) {
+    var temp = new Article(blog.rawData[i]);
+
+    $('main').prepend(temp.toHTML());
+  };
 };
 
 blog.dropDown = function() {
@@ -84,16 +88,6 @@ blog.sortRawDate = function() {
   });
 };
 
-blog.createArticles = function() {
-  for (var i = 0; i < blog.rawData.length; i++) {
-    var temp = new Article(blog.rawData[i]);
-
-    $('main').prepend(temp.toHTML());
-  };
-  // $('#template').remove();
-};
-
-
 blog.hideArticles = function() {
   $('article p:not(:first-child)').hide();
   $('article').on('click', '.read-on', function(event) {
@@ -129,5 +123,3 @@ $(document).ready(function() {
   blog.tabDrop();
   blog.contentReturn();
 });
-
-//look at data attributes
