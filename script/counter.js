@@ -2,11 +2,11 @@ var blogStats = {};
 var articles = [];
 var authors = [];
 var totalNumberOfWords = [];
+var filteredArray = [];
 var totalWordCount;
 
 
 $.getJSON( 'script/hackerIpsum.json',function ( data ) {
-
 
   blogStats.pluck = function(key, val) {
     var plucked = val.map(function(item) {
@@ -40,11 +40,12 @@ $.getJSON( 'script/hackerIpsum.json',function ( data ) {
   blogStats.totalWords = function() {
     totalNumberOfWords = blogStats.pluck('markdown', data);
     lengthOfWords = totalNumberOfWords.map(function(str) {
-      str = str.replace('##', '');
+      return str.replace('##', '').split(' ').length;
     });
-    lengthOfWords = totalNumberOfWords.map(function(item) {
-      return item.split(' ').length;
-    });
+
+    filteredArray.push(lengthOfWords);
+
+    console.log(lengthOfWords);
 
     totalWordCount = lengthOfWords.reduce(blogStats.add);
     console.log('total ' + totalWordCount);
@@ -52,14 +53,52 @@ $.getJSON( 'script/hackerIpsum.json',function ( data ) {
 
   };
 
-  blogStats.averageWords = function() {
-    var averageTotal = blogStats.average(totalWordCount, data);
-    $('#stats').append('<p>Average words per post: ' + averageWords + '</p>');
+  blogStats.authorNames = function() {
+    var numofArticles = {};
+    var countArticles = 0;
+    var countWordsperAuthor = 0;
+    var numofWords = 0;
+
+    var authorsUniqueR = blogStats.pluck('author', data);
+    var authorsArticle = blogStats.pluck('markdown', data);
+    var uniqueAuthorsR = $.unique(authorsUniqueR);
+
+
+/*
+    console.log(data[0].markdown);
+    for(var j=0; j<data.length; j++){
+      if(data[j].author == 'Dr. Tressie Kuphal')
+      {
+        countArticles++;
+      }
+    }
+    console.log(countArticles);
+*/
+
+    uniqueAuthorsR.forEach(function(entry) {
+      console.log(entry);
+      $('#stats').append('<h1>'+entry+'</h1>');
+      data.forEach(function(k) {
+        if(k.author == entry)
+        {
+          countWordsperAuthor += k.markdown.replace('##', '').split(' ').length;
+          countArticles++;
+        }
+      });
+
+      $('#stats').append('<p>Number of articles: '+countArticles+'</p>');
+      $('#stats').append('<p>Words written: '+countWordsperAuthor+'</p>');
+
+      countArticles=0;
+      countWordsperAuthor=0;
+    });
   };
 
 
   blogStats.authorCount();
   blogStats.articlesCount();
   blogStats.totalWords();
+  blogStats.authorNames();
+
 
 });
